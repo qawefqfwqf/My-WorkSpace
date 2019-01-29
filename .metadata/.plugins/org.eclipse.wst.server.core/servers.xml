@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<servers>
+  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/Jetty v8.1 Server at localhost-config" deployDir="wtpwebapps" hostname="localhost" id="Jetty v8.1 Server at localhost" name="Jetty v8.1 Server at localhost" runtime-id="Jetty v8.1" server-type="org.eclipse.jst.server.jetty.81" server-type-id="org.eclipse.jst.server.jetty.81" start-timeout="30" stop-timeout="15" testEnvironment="true" timestamp="0"/>
+</servers>

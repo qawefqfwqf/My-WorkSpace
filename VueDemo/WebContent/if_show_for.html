@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>2-6 v-if, v-show与v-for指令</title>
+<script src="./vue.js"></script>
+</head>
+<body>
+	<div id="root">
+		<ul>
+			<li v-show="vshow" @click="first">首页</li>
+			<li @click="prev">上一页</li>
+			<li v-for="item of list" :key="item">{{item}}</li>
+			<li @click="next">下一页</li>
+			<li v-if="vif" @click="end">尾页</li>
+			<li>当前：第{{page}}页</li>
+		</ul>
+	</div>
+
+	<script>
+		new Vue({
+			el : "#root",
+			data : {
+				vif : true,
+				vshow : true,
+				list : [ 1, 2, 3 ],
+				page : 2
+			},
+			methods : {
+				next : function() {
+					if (this.page < 3) {
+						this.page++
+						this.vshow = true
+					}
+					if (this.page == 3) {
+						this.vif = false
+					}
+				},
+				prev : function() {
+					if (this.page > 1) {
+						this.page--
+						this.vif = true
+					}
+					if (this.page == 1) {
+						this.vshow = false
+					}
+				},
+				first : function() {
+					this.page = 1
+					this.vshow = false
+					this.vif = true
+				},
+				end : function() {
+					this.page = 3
+					this.vif = false
+					this.vshow = true
+				}
+			}
+		})
+	</script>
+</body>
+</html>

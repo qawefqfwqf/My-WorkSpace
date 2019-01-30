@@ -1,3 +1,0 @@
-eclipse.preferences.version=1
-module-start-timeout=300000
-runtimes=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<runtimes>\r\n  <runtime id\="Jetty v8.1" location\="D\:/Software/Programmer/Java/WebServer/jetty/jetty-distribution-8.1.11.v20130520" name\="Jetty v8.1" runtime-type-id\="org.eclipse.jst.server.jetty.runtime.81" timestamp\="0"/>\r\n</runtimes>\r\n

@@ -14,24 +14,39 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-<!-- 	<bean id="userController" class="com.zzh.controller.UserController"
+	<bean id="userController" class="com.zzh.controller.UserController"
 		init-method="init" destroy-method="destroy">
 		<property name="userService" ref="userService"></property>
 	</bean>
-
-	<bean id="userService" class="com.zzh.service.UserService">
+ 
+	<bean id="userService" class="com.zzh.service.impl.UserServiceImpl">
 		<property name="userDao" ref="userDao"></property>
 	</bean>
 
 	<bean id="userDao" class="com.zzh.dao.UserDao">
 		<property name="user" ref="user"></property>
 	</bean>
- -->
+
 	<bean id="user" class="com.zzh.entity.User">
 		<constructor-arg name="name" value="zzh"></constructor-arg>
 		<constructor-arg name="sex" value="0"></constructor-arg>
 		<property name="age" value="18"></property>
 		<property name="email" value="xxx@qq.com"></property>
 	</bean>
+	
+	<!-- 切面类 -->
+ 	<bean id="myAspect" class="com.zzh.aop.MyAopAspect"></bean>
 
+	<!-- 手动代理类 -->
+<!-- 	<bean id="proxyService" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="interfaces" value="com.zzh.service.UserService"></property>
+		<property name="target" ref="userService"></property>
+		<property name="interceptorNames" value="myAspect"></property>
+	</bean>
+ -->	
+ 
+ 	<aop:config>
+ 		<aop:pointcut expression="execution(* com.zzh.service.impl.UserServiceImpl.*(..))" id="myPointCut"/>
+ 		<aop:advisor advice-ref="myAspect" pointcut-ref="myPointCut"/>
+ 	</aop:config>
 </beans>

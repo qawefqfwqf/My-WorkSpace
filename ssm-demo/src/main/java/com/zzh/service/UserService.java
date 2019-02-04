@@ -1,23 +1,11 @@
 package com.zzh.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.zzh.dao.UserDao;
 import com.zzh.entity.User;
 
-@Service
-public class UserService {
+public interface UserService {
 
-	 @Autowired
-	private UserDao dao;
+	User getUser();
 
-//	public void setUserDao(UserDao dao) {
-//		this.dao = dao;
-//	}
-
-	public User getUser() {
-		return dao.getUser();
-	}
+	User getUser(String msg);
 
 }

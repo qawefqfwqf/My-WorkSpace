@@ -8,19 +8,19 @@ import org.springframework.stereotype.Controller;
 
 import com.zzh.service.UserService;
 
-@Controller("userController")
+//@Controller("userController")
 public class UserController {
 
-	@Autowired
+//	@Autowired
 	private UserService service;
 
-	// public void setUserService(UserService service) {
-	// this.service = service;
-	// }
+	public void setUserService(UserService service) {
+		this.service = service;
+	}
 
 	@PostConstruct
 	public void init() {
-		System.out.println("ÇëÇó¿ªÊ¼");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½Ê¼");
 	}
 
 	public void getUser() {
@@ -29,7 +29,7 @@ public class UserController {
 
 	@PreDestroy
 	public void destroy() {
-		System.out.println("ÇëÇó½áÊø");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 	}
 
 }

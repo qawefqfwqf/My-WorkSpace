@@ -1,81 +1,69 @@
 package com.zzh.test;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.zzh.aop.MyAspect;
-import com.zzh.aop.MyBeanFactory;
+import com.zzh.controller.DeptController;
 import com.zzh.controller.UserController;
+import com.zzh.dao.UserMapper;
+import com.zzh.entity.Dept;
 import com.zzh.entity.User;
+import com.zzh.service.DeptService;
+import com.zzh.service.DeptService;
 import com.zzh.service.UserService;
-import com.zzh.service.impl.UserServiceImpl;
+import com.zzh.service.UserService;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+import java.util.UUID;
 
+import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:spring/applicationContext.xml" })
 public class MyTest {
 
-	/**
-	 * 依赖注入控制反转
-	 */
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	DeptService deptService;
+
+	@Autowired
+	SqlSession sqlSession;
+
 	@Test
 	public void test() {
-
-		ClassPathXmlApplicationContext app = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
-		UserController uc = (UserController) app.getBean("userController");
-		uc.getUser();
-		app.close();
-
+		Dept dept = new Dept();
+		dept.setDeptName("回收部");
+		deptService.addDept(dept);
 	}
 
-	/**
-	 * 面向切面AOP JDKProxy
-	 */
-	@Test
-	public void test1() {
-
-		UserService service = MyBeanFactory.getJDKProxyBean();
-		service.getUser("zzh");
-
-	}
-
-	/**
-	 * 面向切面AOP CGLIBProxy
-	 */
 	@Test
 	public void test2() {
-
-		UserService service = MyBeanFactory.getCGLIBProxyBean();
-		service.getUser("zzh1");
-
+		User user = new User();
+		user.setUserName("zzh");
+		user.setUserPwd("123456");
+		user.setUserDeptId(8);
+		userService.addUser(user);
 	}
 
-	/**
-	 * 面向切面AOP 半自动
-	 */
 	@Test
 	public void test3() {
-
-		ClassPathXmlApplicationContext app = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
-		UserService us = (UserService) app.getBean("proxyService");
-		us.getUser();
-		app.close();
-
+		User user = userService.getUser("3");
+		System.out.println(user.toString());
 	}
-	
-	/**
-	 * 面向切面AOP 自动
-	 */
+
 	@Test
 	public void test4() {
-
-		ClassPathXmlApplicationContext app = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
-		UserService us = (UserService) app.getBean("userService");
-		us.getUser();
-		app.close();
-
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		for (int i = 4; i < 1000; i++) {
+			User user = new User();
+			user.setUserName(UUID.randomUUID().toString().substring(0, 5));
+			user.setUserPwd("123456");
+			user.setUserDeptId(1);
+			userMapper.insert(user);
+		}
 	}
-
 }

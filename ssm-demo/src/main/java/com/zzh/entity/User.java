@@ -1,40 +1,50 @@
 package com.zzh.entity;
 
-import org.springframework.stereotype.Component;
-
-//@Component
 public class User {
+	private Integer userId;
 
-	private String name;
-	private int sex;
-	private int age;
-	private String email;
+	private String userPwd;
 
-	public User(String name, int sex) {
-		super();
-		this.name = name;
-		this.sex = sex;
+	private String userName;
+
+	private Integer userDeptId;
+
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public int getAge() {
-		return age;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public String getUserPwd() {
+		return userPwd;
 	}
 
-	public String getEmail() {
-		return email;
+	public void setUserPwd(String userPwd) {
+		this.userPwd = userPwd == null ? null : userPwd.trim();
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName == null ? null : userName.trim();
+	}
+
+	public Integer getUserDeptId() {
+		return userDeptId;
+	}
+
+	public void setUserDeptId(Integer userDeptId) {
+		this.userDeptId = userDeptId;
 	}
 
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", sex=" + sex + ", age=" + age + ", email=" + email + "]";
+		return "User [userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName + ", userDeptId="
+				+ userDeptId + "]";
 	}
 
 }

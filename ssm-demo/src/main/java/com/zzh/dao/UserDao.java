@@ -5,10 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.zzh.entity.User;
 
-//@Repository
+@Repository
 public class UserDao {
 
-//	@Autowired
+	@Autowired
 	private User user;
 
 	public void setUser(User user) {

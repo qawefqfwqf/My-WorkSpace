@@ -10,15 +10,15 @@ import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
 
 import com.zzh.service.UserService;
-import com.zzh.service.impl.UserServiceImpl;
+import com.zzh.service.UserService;
 import com.zzh.test.MyTest;
 
 public class MyBeanFactory {
 
 	public static UserService getJDKProxyBean() {
 
-		UserService userService = new UserServiceImpl();
-		MyAspect ms = new MyAspect();
+		UserService userService = new UserService();
+		MyAdvice ms = new MyAdvice();
 
 		UserService proxyUserService = (UserService) Proxy.newProxyInstance(MyBeanFactory.class.getClassLoader(),
 				userService.getClass().getInterfaces(), new InvocationHandler() {
@@ -44,8 +44,8 @@ public class MyBeanFactory {
 
 	public static UserService getCGLIBProxyBean() {
 
-		UserServiceImpl userService = new UserServiceImpl();
-		MyAspect ms = new MyAspect();
+		UserService userService = new UserService();
+		MyAdvice ms = new MyAdvice();
 
 		Enhancer e = new Enhancer();
 

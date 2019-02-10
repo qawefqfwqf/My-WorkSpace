@@ -58,11 +58,11 @@ public class MyTest {
 	@Test
 	public void test4() {
 		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-		for (int i = 4; i < 1000; i++) {
+		for (int i = 15; i < 1000; i++) {
 			User user = new User();
 			user.setUserName(UUID.randomUUID().toString().substring(0, 5));
 			user.setUserPwd("123456");
-			user.setUserDeptId(1);
+			user.setUserDeptId(8);
 			userMapper.insert(user);
 		}
 	}

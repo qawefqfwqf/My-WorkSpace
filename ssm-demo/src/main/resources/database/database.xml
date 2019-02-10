@@ -35,7 +35,8 @@
 	<!-- 开启批量操作 -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
-		<constructor-arg name="executorType" value="BATCH"></constructor-arg>
+		<!-- executorType设置为BATCH会导致insert成功后返回值为-2147482646，设置为SIMPLE则不会 -->
+		<constructor-arg name="executorType" value="SIMPLE"></constructor-arg>
 	</bean>
 
 	<!-- 配置扫描器，将mybatis接口的实现加入到ioc容器中 -->

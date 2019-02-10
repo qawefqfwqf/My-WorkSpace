@@ -24,9 +24,7 @@ public class DeptService {
 	public boolean addDept(Dept dept) {
 		boolean result = false;
 
-		int a=dao.insert(dept);
-		
-		if (a == 1) {
+		if (dao.insert(dept) == 1) {
 			result = true;
 		} else {
 			System.out.println("新增部门失败：" + dept.toString());

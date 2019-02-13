@@ -1,0 +1,62 @@
+#服务相关
+server:
+  port: 80
+  context-path: /springboot
+  
+#数据库
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.41.129:3306/test
+    username: root
+    password: root
+
+#日志  
+logging:
+  path: D:\Software\Programmer\Java\Eclipse\My-WorkSpace\firstdemo
+  file: springboot-demo.log
+
+#功能列表    
+functions:
+  function:
+  - url: hello
+    info: 显示当前时间
+  - url: prop
+    info: 读取属性文件
+  - url: para/pathvar
+    info: controller获取参数
+  - url: para/default
+    info: controller获取参数 默认值 
+  - url: db/query
+    info: spring bootjpa 操作数据库-列表查询
+  - url: db/queryById/{id}
+    info: spring bootjpa 操作数据库-根据Id查询
+  - url: db/queryByName/{username}
+    info: spring bootjpa 操作数据库-根据用户名查询
+  - url: db/transactional/{username}
+    info: spring bootjpa 操作数据库-事务回滚
+  - url: db/add/dao_User
+    info: spring bootjpa 操作数据库-增
+  - url: db/delete/{id}
+    info: spring bootjpa 操作数据库-删
+  - url: db/deleteAll
+    info: spring bootjpa 操作数据库-删除全部
+  - url: db/update/dao_User
+    info: spring bootjpa 操作数据库-改
+    
+#例子
+myProps:
+  simpleProp: simplePropValue
+  arrayProps: 1,2,3,4,5
+  listProp1:
+  - name: abc
+    value: abcValue
+  - name: efg
+    value: efgValue
+  listProp2:
+  - config2Value1
+  - config2Vavlue2
+  mapProps:
+    key1: value1
+    key2: value2
+  

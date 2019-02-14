@@ -9,7 +9,7 @@
 	<div id="root">
 		<div :title="title">bind</div>
 		<h1>{{content}}</h1>
-		<input v-model="content" />
+		<input v-model.lazy="content" />
 	</div>
 
 	<script>

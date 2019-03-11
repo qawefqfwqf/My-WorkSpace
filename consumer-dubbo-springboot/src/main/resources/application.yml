@@ -1,0 +1,13 @@
+#服务相关
+server:
+  port: 8082
+
+spring:
+  profiles:
+    #开发模式
+    active: dev
+    #热部署生效
+  devtools:
+    restart:
+      enabled: true
+  

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="/webjars/jquery/3.3.1-2/jquery.min.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div class="container">
+		<h2>bootstrap基础表格</h2>
+		<button type="button" class="btn btn-primary" onclick="user('POST')">添加用户</button>
+		<button type="button" class="btn btn-primary" onclick="user('PUT')">修改用户</button>
+		<button type="button" class="btn btn-primary" onclick="user('DELETE')">删除用户</button>
+		<button type="button" class="btn btn-primary" onclick="user('trans')">事务管理</button>
+		<button type="button" class="btn btn-primary"
+			onclick="user('NamedParameter')">测试具名参数使用</button>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>sid</th>
+					<th>username</th>
+					<th>realname</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${allUser}">
+					<td th:text="${user.SID}"></td>
+					<td th:text="${user.NAME}"></td>
+					<td th:text="${user.LABEL}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<script type="text/javascript">
+		function user(type) {
+			var data = {};
+			var dataStr;
+			var url = "user";
+			if (type == 'POST') {
+				data = {
+					"sid" : "300",
+					"name" : "zzh",
+					"label" : "zzh",
+					"code" : "1"
+				};
+				dataStr = JSON.stringify(data);
+			}
+			if (type == 'PUT') {
+				data = {
+					"sid" : "300",
+					"name" : "zzh1",
+					"label" : "zzh1",
+					"code" : "1"
+				};
+				dataStr = JSON.stringify(data);
+			}
+			if (type == 'DELETE') {
+				dataStr = '300';
+			}
+			if (type == 'trans') {
+				type = 'GET';
+				dataStr = "sid=300&test=test";
+				url = "user/trans";
+			}
+			if (type == 'NamedParameter') {
+				type = "POST";
+				data = {
+					"sid" : "300",
+					"name" : "zzh",
+					"label" : "zzh",
+					"code" : "1"
+				};
+				dataStr = JSON.stringify(data);
+				url = "user/NamedParameter";
+			}
+
+			$.ajax({
+				type : type,
+				url : url,
+				contentType : "application/json; charset=utf-8",
+				data : dataStr,
+				dataType : "json",
+				success : function(message) {
+					alert(message);
+					location.reload();
+				},
+				error : function(message) {
+					alert(message);
+					location.reload();
+				}
+			});
+		}
+	</script>
+	<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

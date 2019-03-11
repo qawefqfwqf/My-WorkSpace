@@ -8,6 +8,8 @@
 <body>
 	<div id="root">
 		<h1 @click="hi">{{say}} {{msg}}</h1>
+		<h2 v-text="'asdf'+msg"></h2>
+		<input type="button" v-bind:title="title" />
 	</div>
 
 	<script>
@@ -15,7 +17,8 @@
 			el : "#root",
 			data : {
 				msg : "vue",
-				say : "hello"
+				say : "hello",
+				title : "asdfas"
 			},
 			methods:{
 				hi:function(){

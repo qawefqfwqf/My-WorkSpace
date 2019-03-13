@@ -7,4 +7,17 @@
 			<allowed-methods>add,update,delete,list</allowed-methods>
 		</action>
 	</package>
+
+	<package name="demo" extends="struts-default" namespace="/demo">
+		<global-results>
+			<result name="success">/WEB-INF/view/customer/customerList.jsp</result>
+		</global-results>
+
+		<action name="book" class="com.zzh.action.BookAction">
+			<result name="success" type="redirectAction">orders</result>
+		</action>
+		<action name="orders" class="com.zzh.action.OrderAction">
+			<result name="success">/WEB-INF/view/demo/orders.jsp</result>
+		</action>
+	</package>
 </struts>

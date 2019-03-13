@@ -16,5 +16,6 @@
 	<include file="hello-struts.xml"></include>
 	<include file="user-struts.xml"></include>
 	<include file="customer-struts.xml"></include>
+	<include file="form-struts.xml"></include>
 
 </struts>

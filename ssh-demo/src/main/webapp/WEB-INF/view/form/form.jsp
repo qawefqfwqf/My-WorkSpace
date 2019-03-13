@@ -18,25 +18,13 @@
 <body>
 
 	<div class="container">
-
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Firstname</th>
-					<th>Lastname</th>
-					<th>Email</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${list}" varStatus="i" var="item">
-					<tr>
-						<td>${item.id}</td>
-						<td>${item.name}</td>
-						<td>${item.address}</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+		<form action="${pageContext.request.contextPath}/form/submit" method="post">
+			username:<input type="text" name="username"/>
+			<br/>
+			password:<input type="text" name=""/>
+			<br/>
+			<input type="submit" value="提交">
+		</form>
 
 	</div>
 

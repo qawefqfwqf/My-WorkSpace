@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<package name="form" namespace="/form" extends="struts-default">
+		<action name="submit" class="com.zzh.action.FormAction">
+		</action>
+		<action name="page" class="com.zzh.action.FormAction" method="page">
+			<result name="success">/WEB-INF/view/form/form.jsp</result>
+		</action>
+	</package>
+</struts>

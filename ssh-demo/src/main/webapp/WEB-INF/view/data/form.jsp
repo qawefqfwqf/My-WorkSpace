@@ -18,7 +18,7 @@
 <body>
 
 	<div class="container">
-		<form action="${pageContext.request.contextPath}/form/submit" method="post">
+		<form action="${pageContext.request.contextPath}/data/submit" method="post">
 			username:<input type="text" name="username"/>
 			<br/>
 			password:<input type="text" name="password"/>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<package name="data" namespace="/data" extends="struts-default">
+		<action name="page" class="com.zzh.action.DataDemoAction" method="page">
+			<result name="success">/WEB-INF/view/data/form.jsp</result>
+		</action>
+		<action name="submit" class="com.zzh.action.DataDemoAction">
+		</action>
+		<action name="page2" class="com.zzh.action.DataDemoAction2" method="page">
+			<result name="success">/WEB-INF/view/data/form2.jsp</result>
+		</action>
+		<action name="submit2" class="com.zzh.action.DataDemoAction2">
+		</action>
+	</package>
+</struts>

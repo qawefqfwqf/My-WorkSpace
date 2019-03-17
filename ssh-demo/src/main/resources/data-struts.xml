@@ -12,5 +12,14 @@
 		</action>
 		<action name="submit2" class="com.zzh.action.DataDemoAction2">
 		</action>
+		<action name="page3" class="com.zzh.action.DataDemoAction3" method="page">
+			<result name="success">/WEB-INF/view/data/form3.jsp</result>
+		</action>
+		<action name="submit3" class="com.zzh.action.DataDemoAction3">
+		</action>
+		<action name="submit3_2" class="com.zzh.action.DataDemoAction3" method="submit3_2">
+		</action>
+		<action name="submit3_3" class="com.zzh.action.DataDemoAction3" method="submit3_3">
+		</action>
 	</package>
 </struts>

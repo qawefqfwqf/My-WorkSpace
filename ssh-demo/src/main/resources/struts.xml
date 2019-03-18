@@ -18,5 +18,6 @@
 	<include file="customer-struts.xml"></include>
 	<include file="form-struts.xml"></include>
 	<include file="data-struts.xml"></include>
+	<include file="ognl-struts.xml"></include>
 
 </struts>

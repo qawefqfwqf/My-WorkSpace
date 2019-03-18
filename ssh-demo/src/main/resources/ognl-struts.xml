@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<package name="ognl" namespace="/ognl" extends="struts-default">
+		<action name="list" class="com.zzh.action.OgnlAction">
+			<result name="list">/WEB-INF/view/ognl/ognl.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -4,7 +4,15 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class UserAction extends ActionSupport {
 
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
 	public String find() {
+		name = "zzh";
+
 		return SUCCESS;
 	}
 

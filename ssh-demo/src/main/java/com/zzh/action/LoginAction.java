@@ -10,8 +10,7 @@ import org.apache.struts2.convention.annotation.Result;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-@ParentPackage("struts-default")
-@Namespace("/")
+@ParentPackage("mydefault")
 public class LoginAction extends ActionSupport {
 
 	@Action(value = "/loginPage", results = { @Result(location = "/login.jsp") })
@@ -32,6 +31,7 @@ public class LoginAction extends ActionSupport {
 		String result = "登陆失败";
 
 		if (username.equals("zzh") && password.equals("123456")) {
+			request.getSession().setAttribute("username", username);
 			result = "登陆成功";
 			return SUCCESS;
 		} else {

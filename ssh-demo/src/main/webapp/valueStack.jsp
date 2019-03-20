@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!-- 引入el标识所需要的标签 -->
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- 引入struts2所需要的标签 -->
 <%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

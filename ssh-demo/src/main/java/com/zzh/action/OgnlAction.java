@@ -15,11 +15,13 @@ import com.zzh.entity.CustomerEntity;
 import com.zzh.service.CustomerService;
 import com.zzh.service.impl.CustomerServiceImpl;
 
-@ParentPackage("ognl")
+@ParentPackage("mydefault")
+@Namespace("ognl")
 public class OgnlAction extends ActionSupport {
 
 	private CustomerService service = new CustomerServiceImpl();
 
+	@Action(value = "/list", results = { @Result(location = "/WEB-INF/view/ognl/ognl.jsp") })
 	public String list() throws Exception {
 		List<CustomerEntity> list = service.list();
 		System.out.println(list);

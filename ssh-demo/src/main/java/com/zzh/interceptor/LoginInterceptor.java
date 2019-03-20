@@ -15,16 +15,15 @@ public class LoginInterceptor extends MethodFilterInterceptor {
 
 		HttpSession session = ServletActionContext.getRequest().getSession();
 
-		String username = session.getAttribute("username").toString();
+		Object username = session.getAttribute("username");
 
-		if (!"".equals(username)) {
+		if (username != null) {
 			System.out.println("===================session不为空======================");
 			return invocation.invoke();
 		} else {
 			System.out.println("===================session为空，需要登录======================");
-			return "error";
+			return "loginError";
 		}
-
 	}
 
 }

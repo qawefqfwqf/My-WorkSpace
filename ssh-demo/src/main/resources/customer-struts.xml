@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
 <struts>
-	<package name="customer" namespace="/customer" extends="struts-default">
+	<package name="customer" namespace="/customer" extends="mydefault">
 		<action name="*" class="com.zzh.action.CustomerAction" method="{1}">
 			<result name="list">/WEB-INF/view/customer/customerList.jsp</result>
 			<allowed-methods>add,update,delete,list</allowed-methods>
 		</action>
 	</package>
 
-	<package name="demo" extends="struts-default" namespace="/demo">
+	<package name="demo" extends="mydefault" namespace="/demo">
 		<global-results>
 			<result name="success">/WEB-INF/view/customer/customerList.jsp</result>
 		</global-results>

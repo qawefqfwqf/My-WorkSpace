@@ -13,8 +13,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.util.ValueStack;
 import com.zzh.entity.UserEntity;
 
-@ParentPackage("struts-default")
-@Namespace("/vs")
+@ParentPackage("mydefault")
+@Namespace("vs")
 public class ValueStackAction extends ActionSupport {
 
 	private String hello;

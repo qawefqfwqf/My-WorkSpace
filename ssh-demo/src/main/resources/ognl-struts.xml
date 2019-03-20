@@ -2,8 +2,13 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
 <struts>
 	<package name="ognl" namespace="/ognl" extends="struts-default">
-		<action name="list" class="com.zzh.action.OgnlAction">
-			<result name="list">/WEB-INF/view/ognl/ognl.jsp</result>
+		<interceptors>
+			<interceptor name="loginInterceptor" class="com.zzh.interceptor.LoginInterceptor"></interceptor>
+		</interceptors>
+		<action name="list" class="com.zzh.action.OgnlAction" method="list">
+			<interceptor-ref name="loginInterceptor"></interceptor-ref>
+			<interceptor-ref name=""></interceptor-ref>
+			<result name="success">/WEB-INF/view/ognl/ognl.jsp</result>
 		</action>
 	</package>
 </struts>

@@ -2,7 +2,7 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
 <struts>
 
-<!-- 请求参数的编码方式--> 
+	<!-- 请求参数的编码方式 -->
 	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
 	<!-- 指定需要Struts2处理的请求后缀 -->
 	<!-- <constant name="struts.action.extension" value="do,action"></constant> -->

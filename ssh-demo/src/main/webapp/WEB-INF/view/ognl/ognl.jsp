@@ -39,6 +39,8 @@
 		</table>
 
 	</div>
+	
+	<s:textfield name="username"value="%{#request.username}"></s:textfield>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.zzh.parser;
+package com.zzh.controller;
 
 import org.junit.Test;
 import org.openqa.selenium.Alert;
@@ -7,6 +7,11 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.zzh.utils.ImageDownload;
 import com.zzh.utils.ParseImageUtil;
@@ -14,21 +19,43 @@ import com.zzh.utils.ParseImageUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-public class ParseXjtudlcTest {
+@RestController
+public class ParseXjtudlcController {
 
 	private static int time = 0;
+	private String username;
+	private String password;
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@GetMapping("/home")
+	public ModelAndView home() {
+		ModelAndView mv = new ModelAndView("index");
+		System.out.println("========================进入主页=====================");
+		return mv;
+	}
 
 	/**
 	 * 抓取
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test
-	public void parseXjtudlc() throws InterruptedException {
+	@GetMapping("/submit")
+	public void parseXjtudlc(String username, String password) throws InterruptedException {
 		time++;
+
+		setUsername(username);
+		setPassword(password);
 
 		WebDriver driver = null;
 
@@ -141,7 +168,7 @@ public class ParseXjtudlcTest {
 			driver.quit();
 			if (time <= 10) {
 				Thread.sleep(2000);
-				parseXjtudlc();
+				parseXjtudlc(username, password);
 			}
 		} finally {
 			driver.quit();
@@ -162,7 +189,7 @@ public class ParseXjtudlcTest {
 			// 确保输入框中干净
 			input_loginName.clear();
 			// 登录框填写用户名
-			input_loginName.sendKeys("18092653533");
+			input_loginName.sendKeys(username);
 
 			Thread.sleep(1000);
 
@@ -171,14 +198,14 @@ public class ParseXjtudlcTest {
 			// 确保输入框中干净
 			input_password.clear();
 			// 密码框填写密码
-			input_password.sendKeys("zzh789512357");
+			input_password.sendKeys(password);
 
 			Thread.sleep(1000);
 
 			// 下载验证码图片
 			String imgPath = ImageDownload.getImg(driver);
 			// 解析验证码
-			String imgResult = ParseImageUtil.createByPost(imgPath, ParseXjtudlcTest.class);
+			String imgResult = ParseImageUtil.createByPost(imgPath, ParseXjtudlcController.class);
 			// 获取验证码框
 			WebElement input_txtVerifyCode = driver.findElement(By.xpath("//*[@id=\"txtVerifyCode\"]"));
 			// 确保输入框中干净

@@ -19,6 +19,7 @@ public class ImageDownload {
 	public static String getImg(WebDriver driver) throws IOException {
 
 		String imgPath = "E:/图片/验证码/test.png";
+		double a = 1;
 
 		WebElement ele = driver.findElement(By.xpath("//*[@id=\"VerifyCode\"]"));
 		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -30,7 +31,8 @@ public class ImageDownload {
 		int eleWidth = ele.getSize().getWidth();
 		int eleHeight = ele.getSize().getHeight();
 		// Crop the entire page screenshot to get only element screenshot
-		BufferedImage eleScreenshot = fullImg.getSubimage(point.getX(), point.getY(), eleWidth, eleHeight);
+		BufferedImage eleScreenshot = fullImg.getSubimage((int) (point.getX() * a), (int) (point.getY() * a),
+				(int) (eleWidth * a), (int) (eleHeight * a));
 		ImageIO.write(eleScreenshot, "png", screenshot);
 		// Copy the element screenshot to disk
 		File screenshotLocation = new File(imgPath);

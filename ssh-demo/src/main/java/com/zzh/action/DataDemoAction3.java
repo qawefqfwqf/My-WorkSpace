@@ -9,37 +9,37 @@ import org.apache.struts2.dispatcher.Parameter;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.zzh.entity.UserEntity;
+import com.zzh.entity.User;
 
 public class DataDemoAction3 extends ActionSupport {
 
-	private UserEntity user;
+	private User user;
 
-	public UserEntity getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(UserEntity user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
-	private List<UserEntity> list;
+	private List<User> list;
 
-	public List<UserEntity> getList() {
+	public List<User> getList() {
 		return list;
 	}
 
-	public void setList(List<UserEntity> list) {
+	public void setList(List<User> list) {
 		this.list = list;
 	}
 
-	private Map<String, UserEntity> map;
+	private Map<String, User> map;
 
-	public Map<String, UserEntity> getMap() {
+	public Map<String, User> getMap() {
 		return map;
 	}
 
-	public void setMap(Map<String, UserEntity> map) {
+	public void setMap(Map<String, User> map) {
 		this.map = map;
 	}
 
@@ -55,7 +55,7 @@ public class DataDemoAction3 extends ActionSupport {
 	}
 
 	public String submit3_2() {
-		for (UserEntity user : list) {
+		for (User user : list) {
 			System.out.println("username:" + user.getUsername() + "===password:" + user.getPassword());
 		}
 

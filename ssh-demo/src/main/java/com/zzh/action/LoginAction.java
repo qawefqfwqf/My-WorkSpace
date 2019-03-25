@@ -7,10 +7,14 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage("mydefault")
+@Controller
+@Scope("prototype")
 public class LoginAction extends ActionSupport {
 
 	@Action(value = "/loginPage", results = { @Result(location = "/login.jsp") })
@@ -19,7 +23,7 @@ public class LoginAction extends ActionSupport {
 	}
 
 	@Action(value = "/loginSub", results = {
-			@Result(name = "success", location = "/ognl/list", type = "redirectAction"),
+			@Result(name = "success", location = "ognl/list", type = "redirectAction"),
 			@Result(name = "error", location = "/login.jsp") })
 	public String loginSub() {
 

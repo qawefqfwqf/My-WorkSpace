@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.zzh.entity">
+	<class name="Role" table="db_role">
+		<id name="roleId" column="role_id" type="integer">
+			<generator class="native"></generator>
+		</id>
+		<property name="roleName" column="role_name" type="string"></property>
+
+		<set name="users" table="link_user_role">
+			<key column="role_id"></key>
+			<many-to-many class="User" column="user_id"></many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>

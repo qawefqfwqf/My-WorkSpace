@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.zzh.entity">
+	<class name="User" table="db_user">
+		<id name="userId" column="user_id" type="integer">
+			<generator class="native"></generator>
+		</id>
+		<property name="username" column="username" type="string"></property>
+		<property name="password" column="password" type="string"></property>
+
+		<set name="roles" table="link_user_role" cascade="save-update,delete">
+			<key column="user_id"></key>
+			<many-to-many class="Role" column="role_id"></many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>

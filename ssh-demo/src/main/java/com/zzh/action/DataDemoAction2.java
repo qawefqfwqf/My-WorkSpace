@@ -8,14 +8,14 @@ import org.apache.struts2.dispatcher.Parameter;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.zzh.entity.UserEntity;
+import com.zzh.entity.User;
 
-public class DataDemoAction2 extends ActionSupport implements ModelDriven<UserEntity> {
+public class DataDemoAction2 extends ActionSupport implements ModelDriven<User> {
 
-	private UserEntity user = new UserEntity();
+	private User user = new User();
 
 	@Override
-	public UserEntity getModel() {
+	public User getModel() {
 		return user;
 	}
 

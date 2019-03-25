@@ -11,7 +11,7 @@ import org.apache.struts2.convention.annotation.Result;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.util.ValueStack;
-import com.zzh.entity.UserEntity;
+import com.zzh.entity.User;
 
 @ParentPackage("mydefault")
 @Namespace("vs")
@@ -23,15 +23,15 @@ public class ValueStackAction extends ActionSupport {
 		return hello;
 	}
 
-	private UserEntity user = new UserEntity();
+	private User user = new User();
 
-	public UserEntity getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	private List<UserEntity> list = new ArrayList<>();
+	private List<User> list = new ArrayList<>();
 
-	public List<UserEntity> getList() {
+	public List<User> getList() {
 		return list;
 	}
 
@@ -51,11 +51,11 @@ public class ValueStackAction extends ActionSupport {
 		return "success";
 	}
 
-	@Action(value = "/list", results = { @Result(location = "/valueStack.jsp") })
+	@Action(value = "/testlist", results = { @Result(location = "/valueStack.jsp") })
 	public String testList() {
 
 		for (int i = 0; i < 10; i++) {
-			UserEntity user = new UserEntity();
+			User user = new User();
 			user.setUsername("zzh");
 			user.setPassword("123456");
 

@@ -3,28 +3,19 @@ package com.zzh.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.zzh.dao.UserDao;
 import com.zzh.entity.CustomerEntity;
+import com.zzh.entity.User;
 import com.zzh.service.CustomerService;
 
+@Service
 public class CustomerServiceImpl implements CustomerService {
 
-	@Override
-	public boolean add() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean update() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean delete() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	@Autowired
+	private UserDao dao;
 
 	@Override
 	public List<CustomerEntity> list() {
@@ -41,6 +32,23 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 
 		return list;
+	}
+
+	@Override
+	public boolean add(User user) {
+		return false;
+	}
+
+	@Override
+	public boolean update(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(int id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

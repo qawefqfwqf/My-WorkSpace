@@ -15,31 +15,25 @@
 
 
 	<package name="mydefault" extends="struts-default">
-		<interceptors> <!-- 关联自己写的拦截器 -->
+		<!-- <interceptors> 关联自己写的拦截器
 			<interceptor name="loginInterceptor" class="com.zzh.interceptor.LoginInterceptor">
-				<!-- 把自己的拦截器加载到拦截器栈中添加拦截白名单 -->
+				把自己的拦截器加载到拦截器栈中添加拦截白名单
 				<param name="excludeMethods">loginPage,loginSub</param>
 			</interceptor>
-			<!-- 把自己的拦截器加载到拦截器栈中 -->
+			把自己的拦截器加载到拦截器栈中
 			<interceptor-stack name="myStack">
 				<interceptor-ref name="loginInterceptor"></interceptor-ref>
 				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
-		<!-- 为当前包所有Action配置默认拦截器 -->
+		为当前包所有Action配置默认拦截器
 		<default-interceptor-ref name="myStack"></default-interceptor-ref>
-		<!--全局结果集 -->
+		全局结果集
 		<global-results>
-			<result type="redirectAction" name="loginError">/loginPage</result>
-		</global-results>
+			<result type="redirect" name="loginError">/loginPage</result>
+		</global-results> -->
 	</package>
 
-	<include file="hello-struts.xml"></include>
-	<include file="user-struts.xml"></include>
-	<include file="customer-struts.xml"></include>
-	<include file="form-struts.xml"></include>
-	<include file="data-struts.xml"></include>
-
-
+	<include file="*-struts.xml"></include>
 
 </struts>

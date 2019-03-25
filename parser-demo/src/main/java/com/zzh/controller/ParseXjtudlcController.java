@@ -1,48 +1,42 @@
 package com.zzh.controller;
 
-import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zzh.utils.ImageDownload;
 import com.zzh.utils.ParseImageUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-@RestController
+@Controller
 public class ParseXjtudlcController {
 
-	private static int time = 0;
-	private String username;
-	private String password;
+	Logger logger = LoggerFactory.getLogger(getClass());
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	// 验证码不正确重新登录次数
+	private static int loginTimes = 0;
+	// 异常导致重新登录次数
+	private static int exceptionTimes = 0;
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	private WebDriver driver = null;
 
-	@GetMapping("/home")
-	public ModelAndView home() {
-		ModelAndView mv = new ModelAndView("index");
-		System.out.println("========================进入主页=====================");
-		return mv;
+	@GetMapping("/stop")
+	public String stop() {
+		driver.quit();
+		logger.info("========================手动停止========================");
+		return "index.html";
 	}
 
 	/**
@@ -51,18 +45,15 @@ public class ParseXjtudlcController {
 	 * @throws InterruptedException
 	 */
 	@GetMapping("/submit")
-	public void parseXjtudlc(String username, String password) throws InterruptedException {
-		time++;
-
-		setUsername(username);
-		setPassword(password);
-
-		WebDriver driver = null;
+	public void parseXjtudlc(String username, String password, String chromedriverPath,
+			@RequestParam(defaultValue = "1") String coursesNumber,
+			@RequestParam(defaultValue = "1") String courseswareNumber) throws InterruptedException {
 
 		try {
 
 			// 调用chrome driver
-			System.setProperty("webdriver.chrome.driver", "D:/Software/浏览器/Google Chrome/chromedriver.exe");
+			// D:/Software/浏览器/Google Chrome/chromedriver.exe
+			System.setProperty("webdriver.chrome.driver", chromedriverPath);
 
 			// 调用chrome
 			driver = new ChromeDriver();
@@ -76,99 +67,163 @@ public class ParseXjtudlcController {
 			Thread.sleep(2000);
 
 			// 填写表单并登录
-			inputForm(driver);
+			inputForm(driver, username, password);
 
 			Thread.sleep(2000);
 
 			// 登陆成功
+			logger.info("========================登陆成功========================");
 			// 转到对应的frame
 			driver = driver.switchTo().frame(driver.findElement(By.xpath("//*[@id=\"mainFrame\"]")));
 
 			// 获取课程列表
+			logger.info("========================获取课程列表========================");
 			WebElement tbody_courses = driver.findElement(By.xpath("//*[@id=\"InCourse\"]/tbody"));
 
 			List<WebElement> btn_courses_list_a = tbody_courses.findElements(By.tagName("a"));
 
+			int course = 1;
+			int coursesware = 1;
 			for (WebElement btn_courses_a : btn_courses_list_a) {
-				// 进入到课程中
-				btn_courses_a.click();
 
-				Thread.sleep(2000);
+				String href_courses = btn_courses_a.getAttribute("href");
 
-				// 获取课件列表
-				WebElement table_coursesware = driver.findElement(By.xpath("//*[@id=\"InCourse\"]"));
+				// 获取到的a标签中，有一半是积分页面的链接，不点进去
+				if (!href_courses.contains("PointsDetailNew.aspx") && !href_courses.contains("CourseID=&nbsp;")) {
 
-				List<WebElement> btn_coursesware_list_a = table_coursesware.findElements(By.tagName("a"));
+					// Integer.parseInt(coursesNumber) ==
+					// course,则用户输入了选择课程，只有到选择的课程才进入到下一层：课件
+					if (Integer.parseInt(coursesNumber) <= course) {
 
-				for (WebElement btn_coursesware_a : btn_coursesware_list_a) {
-					// 总共等待10秒， 如果10秒后，元素还不存在，就会抛出异常
-					// org.openqa.selenium.NoSuchElementException
-					driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-					// 进入课件
-					btn_coursesware_a.click();
+						// 获取目前所有标签
+						ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
 
-					Thread.sleep(2000);
-
-					// 打开了一个新的标签页
-					// 获取所有标签页
-					ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-
-					// 切换到新的标签页
-					driver = driver.switchTo().window(tabs.get(1));
-
-					WebElement ul_coursesware = driver.findElement(By.xpath("//*[@id=\"cslist\"]"));
-
-					List<WebElement> btn_li_list_a = ul_coursesware.findElements(By.tagName("a"));
-
-					for (WebElement btn_coursesware_li : btn_li_list_a) {
-
-						// 总共等待10秒， 如果10秒后，元素还不存在，就会抛出异常
-						// org.openqa.selenium.NoSuchElementException
-						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-						// 打开视频
-						btn_coursesware_li.click();
+						// 进入到课程中
+						btn_courses_a.click();
 
 						Thread.sleep(2000);
 
-						// 打开了一个新的标签页
-						tabs = new ArrayList<String>(driver.getWindowHandles());
+						// 获取课件列表
+						logger.info("========================获取课件列表========================");
+						WebElement table_coursesware = driver.findElement(By.xpath("//*[@id=\"InCourse\"]"));
+						List<WebElement> btn_coursesware_list_a = table_coursesware.findElements(By.tagName("a"));
 
-						// 切换到新的标签页
-						driver = driver.switchTo().window(tabs.get(2));
+						for (WebElement btn_coursesware_a : btn_coursesware_list_a) {
 
-						// 获取播放按钮
-						WebElement btn_play = driver.findElement(By.xpath("//*[@id=\"ck_player\"]"));
+							String content_a = btn_coursesware_a.getText();
 
-						// 点击播放按钮
-						btn_play.click();
+							// 获取到的a标签中，可能会有href属性中，“=”后是空的。这种不要
+							if (content_a.contains("多码率")) {
 
-						Thread.sleep(2000);
+								// Integer.parseInt(courseswareNumber) ==
+								// coursesware,则用户输入了选择课程，只有到选择的课程才进入到下一层：课件
+								if (Integer.parseInt(courseswareNumber) <= coursesware) {
 
-						// 关闭当前标签页
-						driver.close();
+									// 总共等待10秒， 如果10秒后，元素还不存在，就会抛出异常
+									// org.openqa.selenium.NoSuchElementException
+									driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+									// 进入课件
+									btn_coursesware_a.click();
 
-						Thread.sleep(2000);
+									Thread.sleep(2000);
 
-						// 获取对话框并确定，如果有对话框的话
-						try {
-							Alert alert = driver.switchTo().alert();
-							// 点击alert弹框的确定按钮
-							alert.accept();
-						} catch (Exception e) {
+									// 获取目前所有标签
+									tabs = new ArrayList<String>(driver.getWindowHandles());
+									// 切换到视频列表所在标签
+									driver = driver.switchTo().window(tabs.get(1));
+
+									// 获取视频列表
+									logger.info("========================获取视频列表========================");
+									WebElement ul_coursesware = driver.findElement(By.xpath("//*[@id=\"cslist\"]"));
+									List<WebElement> btn_li_list_a = ul_coursesware.findElements(By.tagName("a"));
+
+									int videos = 0;
+									for (WebElement btn_coursesware_li : btn_li_list_a) {
+
+										logger.info("========================打开视频========================");
+										videos++;
+										logger.info("========================看到了第" + course + "门课的第" + coursesware
+												+ "个课件的第" + videos + "个视频========================");
+										// 总共等待10秒， 如果10秒后，元素还不存在，就会抛出异常
+										// org.openqa.selenium.NoSuchElementException
+										driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+										// 打开视频
+										btn_coursesware_li.click();
+
+										Thread.sleep(2000);
+
+										// 获取目前所有标签
+										tabs = new ArrayList<String>(driver.getWindowHandles());
+
+										// 切换到视频所在标签
+										driver = driver.switchTo().window(tabs.get(2));
+
+										// 获取播放按钮
+										WebElement btn_play = driver.findElement(By.xpath("//*[@id=\"ck_player\"]"));
+
+										// 点击播放按钮
+										btn_play.click();
+
+										// 每个视频播放时长
+										Thread.sleep(1000 * 2);
+
+										// 关闭当前标签页
+										driver.close();
+
+										Thread.sleep(2000);
+
+										// 获取对话框并确定，如果有对话框的话
+										try {
+											Alert alert = driver.switchTo().alert();
+											// 点击alert弹框的确定按钮
+											alert.accept();
+										} catch (Exception e) {
+										}
+
+										// 视频看完，切换回视频列表，重选视频
+										// 切换到视频列表所在标签
+										driver = driver.switchTo().window(tabs.get(1));
+										Thread.sleep(2000);
+
+										logger.info("========================关闭视频========================");
+									}
+
+									// 本课件的视频列表都看完了，切换回课件列表，重选课件
+									// 切换到课件列表所在标签
+									driver.close();
+									driver = driver.switchTo().window(tabs.get(0));
+
+									Thread.sleep(2000);
+
+								}
+								coursesware++;
+							}
 						}
 
-						// 切换到新的标签页
-						driver = driver.switchTo().window(tabs.get(1));
-					}
+						Thread.sleep(2000);
+						// 本课程中的所有课件都看完了，切换回课程列表，重选课程
+						// 转到对应的frame
+						driver = driver.switchTo().window(tabs.get(0));
+						// 刷新当前网页
+						// driver.navigate().back();
+						driver = driver.switchTo().frame(driver.findElement(By.xpath("//*[@id=\"mainFrame\"]")));
+						Thread.sleep(2000);
 
+					}
+					course++;
 				}
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
+			exceptionTimes++;
+			logger.info("========================异常" + exceptionTimes + "次========================");
+			// 关闭浏览器
 			driver.quit();
-			if (time <= 10) {
+			if (exceptionTimes <= 10) {
+				// 启动浏览器重试
 				Thread.sleep(2000);
-				parseXjtudlc(username, password);
+				parseXjtudlc(username, password, chromedriverPath, coursesNumber, courseswareNumber);
 			}
 		} finally {
 			driver.quit();
@@ -181,8 +236,8 @@ public class ParseXjtudlcController {
 	 * @param driver
 	 * @throws Exception
 	 */
-	public void inputForm(WebDriver driver) throws Exception {
-		if (time <= 10) {
+	public void inputForm(WebDriver driver, String username, String password) throws Exception {
+		if (loginTimes <= 10) {
 
 			// 获取登录框
 			WebElement input_loginName = driver.findElement(By.xpath("//*[@id=\"txtUserName\"]"));
@@ -230,11 +285,17 @@ public class ParseXjtudlcController {
 				// 点击alert弹框的确定按钮
 				alert.accept();
 				// 再次填写表单并登录
-				inputForm(driver);
+
+				loginTimes++;
+
+				inputForm(driver, username, password);
 			} catch (NoAlertPresentException e) {
-				System.out.println("========================登陆成功========================");
+				logger.info("========================验证码不正确，导致重新登陆" + loginTimes + "次========================");
 			}
 
+		} else {
+			exceptionTimes = loginTimes;
+			driver.quit();
 		}
 
 	}

@@ -22,7 +22,6 @@ public class ParseImageUtil {
 		String result = null;
 		result = instance.doOCR(imageFile);
 		result = result.replaceAll("[^a-z^A-Z^0-9]", "");// 替换大小写及数字
-		System.out.println("========================解析验证码结果：" + result + "========================");
 		return result;
 	}
 

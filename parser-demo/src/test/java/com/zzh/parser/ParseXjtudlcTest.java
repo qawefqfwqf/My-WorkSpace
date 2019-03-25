@@ -35,7 +35,7 @@ public class ParseXjtudlcTest {
 		try {
 
 			// 调用chrome driver
-			System.setProperty("webdriver.chrome.driver", "D:/Software/浏览器/Google Chrome/chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver", "D:/Software/Ordinary/上网工具/GoogleChrome/Application/chromedriver.exe");
 
 			// 调用chrome
 			driver = new ChromeDriver();
@@ -95,43 +95,43 @@ public class ParseXjtudlcTest {
 
 					for (WebElement btn_coursesware_li : btn_li_list_a) {
 
-						// 总共等待10秒， 如果10秒后，元素还不存在，就会抛出异常
-						// org.openqa.selenium.NoSuchElementException
-						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-						// 打开视频
-						btn_coursesware_li.click();
-
-						Thread.sleep(2000);
-
-						// 打开了一个新的标签页
-						tabs = new ArrayList<String>(driver.getWindowHandles());
-
-						// 切换到新的标签页
-						driver = driver.switchTo().window(tabs.get(2));
-
-						// 获取播放按钮
-						WebElement btn_play = driver.findElement(By.xpath("//*[@id=\"ck_player\"]"));
-
-						// 点击播放按钮
-						btn_play.click();
-
-						Thread.sleep(2000);
-
-						// 关闭当前标签页
-						driver.close();
-
-						Thread.sleep(2000);
-
-						// 获取对话框并确定，如果有对话框的话
-						try {
-							Alert alert = driver.switchTo().alert();
-							// 点击alert弹框的确定按钮
-							alert.accept();
-						} catch (Exception e) {
-						}
-
-						// 切换到新的标签页
-						driver = driver.switchTo().window(tabs.get(1));
+//						// 总共等待10秒， 如果10秒后，元素还不存在，就会抛出异常
+//						// org.openqa.selenium.NoSuchElementException
+//						driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//						// 打开视频
+//						btn_coursesware_li.click();
+//
+//						Thread.sleep(2000);
+//
+//						// 打开了一个新的标签页
+//						tabs = new ArrayList<String>(driver.getWindowHandles());
+//
+//						// 切换到新的标签页
+//						driver = driver.switchTo().window(tabs.get(2));
+//
+//						// 获取播放按钮
+//						WebElement btn_play = driver.findElement(By.xpath("//*[@id=\"ck_player\"]"));
+//
+//						// 点击播放按钮
+//						btn_play.click();
+//
+//						Thread.sleep(2000);
+//
+//						// 关闭当前标签页
+//						driver.close();
+//
+//						Thread.sleep(2000);
+//
+//						// 获取对话框并确定，如果有对话框的话
+//						try {
+//							Alert alert = driver.switchTo().alert();
+//							// 点击alert弹框的确定按钮
+//							alert.accept();
+//						} catch (Exception e) {
+//						}
+//
+//						// 切换到新的标签页
+//						driver = driver.switchTo().window(tabs.get(1));
 					}
 
 				}

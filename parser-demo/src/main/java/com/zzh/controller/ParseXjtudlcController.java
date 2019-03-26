@@ -3,17 +3,14 @@ package com.zzh.controller;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.zzh.utils.ImageDownload;
@@ -56,7 +53,7 @@ public class ParseXjtudlcController {
 
 			// 调用chrome driver
 			// D:/Software/浏览器/Google Chrome/chromedriver.exe
-			System.setProperty("webdriver.chrome.driver", chromedriverPath);
+			System.setProperty("webdriver.chrome.driver", chromedriverPath + "/chromedriver.exe");
 
 			// 调用chrome
 			driver = new ChromeDriver();
@@ -139,71 +136,108 @@ public class ParseXjtudlcController {
 									// 切换到视频列表所在标签
 									driver = driver.switchTo().window(tabs.get(2));
 
-									// 获取视频列表
-									logger.info("========================获取视频列表========================");
-									WebElement ul_coursesware = driver.findElement(By.xpath("//*[@id=\"cslist\"]"));
-									List<WebElement> btn_li_list_a = ul_coursesware.findElements(By.tagName("a"));
+									// 获取分页
+									driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+									WebElement div_pager = driver.findElement(By.xpath("//*[@id=\"pager\"]"));
+									List<WebElement> btn_pager_list_a = div_pager.findElements(By.tagName("a"));
 
-									int videos = 0;
-									for (WebElement btn_coursesware_li : btn_li_list_a) {
+									int page = 0;
 
-										logger.info("========================打开视频========================");
-										// videos++;
-										// logger.info("========================看到了第"
-										// + course + "门课的第" + coursesware
-										// + "个课件的第" + videos +
-										// "个视频========================");
-										// // 总共等待10秒， 如果10秒后，元素还不存在，就会抛出异常
-										// //
-										// org.openqa.selenium.NoSuchElementException
-										// driver.manage().timeouts().implicitlyWait(10,
-										// TimeUnit.SECONDS);
-										// // 打开视频
-										// btn_coursesware_li.click();
-										//
-										// Thread.sleep(2000);
-										//
-										// // 获取目前所有标签
-										// tabs = new
-										// ArrayList<String>(driver.getWindowHandles());
-										//
-										// // 切换到视频所在标签
-										// driver =
-										// driver.switchTo().window(tabs.get(3));
-										//
-										// // 获取播放按钮
-										// WebElement btn_play =
-										// driver.findElement(By.xpath("//*[@id=\"ck_player\"]"));
-										//
-										// // 点击播放按钮
-										// btn_play.click();
-										//
-										// // 每个视频播放时长
-										// Thread.sleep(1000 * 60 * 6);
-										//
-										// // 关闭当前标签页
-										// driver.close();
-										//
-										// Thread.sleep(2000);
-										//
-										// // 获取对话框并确定，如果有对话框的话
-										// try {
-										// Alert alert =
-										// driver.switchTo().alert();
-										// // 点击alert弹框的确定按钮
-										// alert.accept();
-										// } catch (Exception e) {
-										// }
-										//
-										// // 视频看完，切换回视频列表，重选视频
-										// // 切换到视频列表所在标签
-										// tabs = new
-										// ArrayList<String>(driver.getWindowHandles());
-										// driver =
-										// driver.switchTo().window(tabs.get(2));
-										// Thread.sleep(2000);
+									while (true) {
+										page++;
+										// 获取视频列表
+										logger.info("========================获取视频列表========================");
+										WebElement ul_coursesware = driver.findElement(By.xpath("//*[@id=\"cslist\"]"));
+										List<WebElement> btn_li_list_a = ul_coursesware.findElements(By.tagName("a"));
 
-										logger.info("========================关闭视频========================");
+										int videos = 0;
+										for (WebElement btn_coursesware_li : btn_li_list_a) {
+
+											logger.info("========================打开视频========================");
+											videos++;
+											logger.info("========================看到了第" + course + "门课的第" + coursesware
+													+ "个课件的第" + page + "页的第" + videos + "个视频========================");
+
+											// 总共等待10秒，
+											// 如果10秒后，元素还不存在，就会抛出异常NoSuchElementException
+											driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+											// 打开视频
+											btn_coursesware_li.click();
+
+											Thread.sleep(2000);
+
+											// 获取目前所有标签
+											tabs = new ArrayList<String>(driver.getWindowHandles());
+
+											// 切换到视频所在标签
+											driver = driver.switchTo().window(tabs.get(3));
+
+											// 获取播放按钮
+											driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+											WebElement btn_play = driver
+													.findElement(By.xpath("//*[@id=\"ck_player\"]"));
+
+											// 点击播放按钮
+											driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+											btn_play.click();
+
+											// 每个视频播放时长
+											Thread.sleep(1000);
+
+											// 关闭当前标签页
+											driver.close();
+
+											Thread.sleep(2000);
+
+											// 获取对话框并确定，如果有对话框的话
+											try {
+												Alert alert = driver.switchTo().alert();
+												// 点击alert弹框的确定按钮
+												alert.accept();
+											} catch (Exception e) {
+											}
+
+											// 视频看完，切换回视频列表，重选视频
+											// 切换到视频列表所在标签
+											tabs = new ArrayList<String>(driver.getWindowHandles());
+											driver = driver.switchTo().window(tabs.get(2));
+											Thread.sleep(2000);
+
+											logger.info("========================关闭视频========================");
+										}
+
+										Thread.sleep(2000);
+
+										// 获取下一页按钮
+										WebElement btn_next = null;
+										for (int j = 0; j < btn_pager_list_a.size(); j++) {
+
+											String text = btn_pager_list_a.get(j).getText();
+
+											if ("下一页".equals(text)) {
+												driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+												btn_next = btn_pager_list_a.get(j);
+												break;
+											}
+										}
+
+										if (btn_next == null) {
+											break;
+										} else {
+											// 点击下一页
+											btn_next.click();
+
+											Thread.sleep(2000);
+
+											// 重新获取视频列表
+											ul_coursesware = driver.findElement(By.xpath("//*[@id=\"cslist\"]"));
+											btn_li_list_a = ul_coursesware.findElements(By.tagName("a"));
+											// 重新获取分页
+											driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+											div_pager = driver.findElement(By.xpath("//*[@id=\"pager\"]"));
+											btn_pager_list_a = div_pager.findElements(By.tagName("a"));
+										}
+
 									}
 
 									// 本课件的视频列表都看完了，切换回课件列表，重选课件
@@ -289,7 +323,7 @@ public class ParseXjtudlcController {
 			// 下载验证码图片
 			String imgPath = ImageDownload.getImg(driver);
 			// 解析验证码
-			String imgResult = ParseImageUtil.createByPost(imgPath, ParseXjtudlcController.class);
+			String imgResult = ParseImageUtil.createByPost(imgPath, ParseXjtudlcController.class, logger);
 			// 获取验证码框
 			WebElement input_txtVerifyCode = driver.findElement(By.xpath("//*[@id=\"txtVerifyCode\"]"));
 			// 确保输入框中干净

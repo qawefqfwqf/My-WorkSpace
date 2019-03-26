@@ -67,7 +67,7 @@ public class ParseXjtudlcController {
 			Thread.sleep(2000);
 
 			// 填写表单并登录
-			inputForm(driver, username, password);
+			inputForm(driver, username, password, chromedriverPath);
 
 			Thread.sleep(2000);
 
@@ -182,7 +182,7 @@ public class ParseXjtudlcController {
 											btn_play.click();
 
 											// 每个视频播放时长
-											Thread.sleep(1000);
+											Thread.sleep(1000 * 60 * 6);
 
 											// 关闭当前标签页
 											driver.close();
@@ -299,7 +299,7 @@ public class ParseXjtudlcController {
 	 * @param driver
 	 * @throws Exception
 	 */
-	public void inputForm(WebDriver driver, String username, String password) throws Exception {
+	public void inputForm(WebDriver driver, String username, String password, String tessPath) throws Exception {
 		if (loginTimes <= 10) {
 
 			// 获取登录框
@@ -323,7 +323,7 @@ public class ParseXjtudlcController {
 			// 下载验证码图片
 			String imgPath = ImageDownload.getImg(driver);
 			// 解析验证码
-			String imgResult = ParseImageUtil.createByPost(imgPath, ParseXjtudlcController.class, logger);
+			String imgResult = ParseImageUtil.createByPost(imgPath, ParseXjtudlcController.class, logger, tessPath);
 			// 获取验证码框
 			WebElement input_txtVerifyCode = driver.findElement(By.xpath("//*[@id=\"txtVerifyCode\"]"));
 			// 确保输入框中干净
@@ -351,7 +351,7 @@ public class ParseXjtudlcController {
 
 				loginTimes++;
 
-				inputForm(driver, username, password);
+				inputForm(driver, username, password, tessPath);
 			} catch (NoAlertPresentException e) {
 				logger.info("========================验证码不正确，导致重新登陆" + loginTimes + "次========================");
 			}

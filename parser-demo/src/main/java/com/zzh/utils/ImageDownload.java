@@ -13,6 +13,12 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+/**
+ * 下载验证码图片的工具类
+ * 
+ * @author zzh
+ *
+ */
 public class ImageDownload {
 
 	public static String getImg(WebDriver driver) throws IOException {

@@ -2,10 +2,13 @@ package com.zzh.controller;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -84,9 +87,9 @@ public class ParseXjtudlcController {
 
 			int course = 1;
 			int coursesware = 1;
-			for (WebElement btn_courses_a : btn_courses_list_a) {
+			for (int i = 0; i < btn_courses_list_a.size(); i++) {
 
-				String href_courses = btn_courses_a.getAttribute("href");
+				String href_courses = btn_courses_list_a.get(i).getAttribute("href");
 
 				// 获取到的a标签中，有一半是积分页面的链接，不点进去
 				if (!href_courses.contains("PointsDetailNew.aspx") && !href_courses.contains("CourseID=&nbsp;")) {
@@ -95,11 +98,15 @@ public class ParseXjtudlcController {
 					// course,则用户输入了选择课程，只有到选择的课程才进入到下一层：课件
 					if (Integer.parseInt(coursesNumber) <= course) {
 
+						JavascriptExecutor executor = (JavascriptExecutor) driver;
+						executor.executeScript("window.open('" + href_courses + "')");
+
 						// 获取目前所有标签
 						ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+						driver = driver.switchTo().window(tabs.get(1));
 
 						// 进入到课程中
-						btn_courses_a.click();
+						// btn_courses_list_a.get(i).click();
 
 						Thread.sleep(2000);
 
@@ -130,7 +137,7 @@ public class ParseXjtudlcController {
 									// 获取目前所有标签
 									tabs = new ArrayList<String>(driver.getWindowHandles());
 									// 切换到视频列表所在标签
-									driver = driver.switchTo().window(tabs.get(1));
+									driver = driver.switchTo().window(tabs.get(2));
 
 									// 获取视频列表
 									logger.info("========================获取视频列表========================");
@@ -141,49 +148,60 @@ public class ParseXjtudlcController {
 									for (WebElement btn_coursesware_li : btn_li_list_a) {
 
 										logger.info("========================打开视频========================");
-										videos++;
-										logger.info("========================看到了第" + course + "门课的第" + coursesware
-												+ "个课件的第" + videos + "个视频========================");
-										// 总共等待10秒， 如果10秒后，元素还不存在，就会抛出异常
+										// videos++;
+										// logger.info("========================看到了第"
+										// + course + "门课的第" + coursesware
+										// + "个课件的第" + videos +
+										// "个视频========================");
+										// // 总共等待10秒， 如果10秒后，元素还不存在，就会抛出异常
+										// //
 										// org.openqa.selenium.NoSuchElementException
-										driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-										// 打开视频
-										btn_coursesware_li.click();
-
-										Thread.sleep(2000);
-
-										// 获取目前所有标签
-										tabs = new ArrayList<String>(driver.getWindowHandles());
-
-										// 切换到视频所在标签
-										driver = driver.switchTo().window(tabs.get(2));
-
-										// 获取播放按钮
-										WebElement btn_play = driver.findElement(By.xpath("//*[@id=\"ck_player\"]"));
-
-										// 点击播放按钮
-										btn_play.click();
-
-										// 每个视频播放时长
-										Thread.sleep(1000 * 2);
-
-										// 关闭当前标签页
-										driver.close();
-
-										Thread.sleep(2000);
-
-										// 获取对话框并确定，如果有对话框的话
-										try {
-											Alert alert = driver.switchTo().alert();
-											// 点击alert弹框的确定按钮
-											alert.accept();
-										} catch (Exception e) {
-										}
-
-										// 视频看完，切换回视频列表，重选视频
-										// 切换到视频列表所在标签
-										driver = driver.switchTo().window(tabs.get(1));
-										Thread.sleep(2000);
+										// driver.manage().timeouts().implicitlyWait(10,
+										// TimeUnit.SECONDS);
+										// // 打开视频
+										// btn_coursesware_li.click();
+										//
+										// Thread.sleep(2000);
+										//
+										// // 获取目前所有标签
+										// tabs = new
+										// ArrayList<String>(driver.getWindowHandles());
+										//
+										// // 切换到视频所在标签
+										// driver =
+										// driver.switchTo().window(tabs.get(3));
+										//
+										// // 获取播放按钮
+										// WebElement btn_play =
+										// driver.findElement(By.xpath("//*[@id=\"ck_player\"]"));
+										//
+										// // 点击播放按钮
+										// btn_play.click();
+										//
+										// // 每个视频播放时长
+										// Thread.sleep(1000 * 60 * 6);
+										//
+										// // 关闭当前标签页
+										// driver.close();
+										//
+										// Thread.sleep(2000);
+										//
+										// // 获取对话框并确定，如果有对话框的话
+										// try {
+										// Alert alert =
+										// driver.switchTo().alert();
+										// // 点击alert弹框的确定按钮
+										// alert.accept();
+										// } catch (Exception e) {
+										// }
+										//
+										// // 视频看完，切换回视频列表，重选视频
+										// // 切换到视频列表所在标签
+										// tabs = new
+										// ArrayList<String>(driver.getWindowHandles());
+										// driver =
+										// driver.switchTo().window(tabs.get(2));
+										// Thread.sleep(2000);
 
 										logger.info("========================关闭视频========================");
 									}
@@ -191,7 +209,10 @@ public class ParseXjtudlcController {
 									// 本课件的视频列表都看完了，切换回课件列表，重选课件
 									// 切换到课件列表所在标签
 									driver.close();
-									driver = driver.switchTo().window(tabs.get(0));
+									tabs = new ArrayList<String>(driver.getWindowHandles());
+									driver = driver.switchTo().window(tabs.get(1));
+									// driver = driver.switchTo()
+									// .frame(driver.findElement(By.xpath("//*[@id=\"mainFrame\"]")));
 
 									Thread.sleep(2000);
 
@@ -203,10 +224,18 @@ public class ParseXjtudlcController {
 						Thread.sleep(2000);
 						// 本课程中的所有课件都看完了，切换回课程列表，重选课程
 						// 转到对应的frame
+						// driver.switchTo().defaultContent();
+						// driver =
+						// driver.switchTo().frame(driver.findElement(By.xpath("//*[@id=\"topFrame\"]")));
+						// WebElement btn_myCourse =
+						// driver.findElement(By.xpath("//*[@id=\"Header\"]/ul/li[5]/a"));
+						// btn_myCourse.click();
+						driver.close();
+						tabs = new ArrayList<String>(driver.getWindowHandles());
 						driver = driver.switchTo().window(tabs.get(0));
-						// 刷新当前网页
-						// driver.navigate().back();
 						driver = driver.switchTo().frame(driver.findElement(By.xpath("//*[@id=\"mainFrame\"]")));
+						tbody_courses = driver.findElement(By.xpath("//*[@id=\"InCourse\"]/tbody"));
+						btn_courses_list_a = tbody_courses.findElements(By.tagName("a"));
 						Thread.sleep(2000);
 
 					}

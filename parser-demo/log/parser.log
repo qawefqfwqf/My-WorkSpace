@@ -6142,3 +6142,37 @@ java.lang.NullPointerException: null
 2019-03-26 21:51:08.947  INFO 7236 --- [main] com.zzh.ParserDemoApplication            : Started ParserDemoApplication in 1.997 seconds (JVM running for 2.755)
 2019-03-26 21:51:15.549  INFO 7236 --- [RMI TCP Connection(2)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
 2019-03-26 21:51:15.552  INFO 7236 --- [RMI TCP Connection(2)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-03-27 09:49:36.988  INFO 11916 --- [main] com.zzh.ParserDemoApplication            : Starting ParserDemoApplication on 129-192-zzh-dc with PID 11916 (D:\Software\Programmer\Java\Eclipse\My-WorkSpace\parser-demo\target\classes started by zzh in D:\Software\Programmer\Java\Eclipse\My-WorkSpace\parser-demo)
+2019-03-27 09:49:36.994  INFO 11916 --- [main] com.zzh.ParserDemoApplication            : No active profile set, falling back to default profiles: default
+2019-03-27 09:49:39.086  INFO 11916 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-03-27 09:49:39.125  INFO 11916 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-03-27 09:49:39.126  INFO 11916 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.16]
+2019-03-27 09:49:39.136  INFO 11916 --- [main] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Software\Programmer\Java\JavaRuntime\64bit\jdk1.8.0_131\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;D:\Software\Programmer\Java\JavaRuntime\64bit\jdk1.8.0_131\jre\bin;D:/Software/Programmer/Java/JavaRuntime/64bit/jdk1.8.0_131/jre/bin/server;D:/Software/Programmer/Java/JavaRuntime/64bit/jdk1.8.0_131/jre/bin;D:/Software/Programmer/Java/JavaRuntime/64bit/jdk1.8.0_131/jre/lib/amd64;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;D:\Software\Programmer\Java\JavaRuntime\64bit\jdk1.8.0_131\BIN;D:\Software\Programmer\Java\JavaRuntime\64bit\jdk1.8.0_131\JRE;D:\Software\Programmer\Tools\SVN\bin;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;D:\Software\Programmer\Tools\Maven\apache-maven-3.5.4\BIN;D:\Software\Programmer\C#\Node\;D:\Software\Programmer\Tools\Maven\apache-maven-3.5.4\bin;D:\Software\Programmer\Tools\ANT\apache-ant-1.9.7\bin;C:\Users\zzh\AppData\Local\Microsoft\WindowsApps;C:\Users\zzh\AppData\Local\GitHubDesktop\bin;C:\Users\zzh\AppData\Roaming\npm;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;;D:\Software\Programmer\Java\Eclipse\My-Eclipse;;.]
+2019-03-27 09:49:41.465  INFO 11916 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-03-27 09:49:41.465  INFO 11916 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 4398 ms
+2019-03-27 09:49:41.872  INFO 11916 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-03-27 09:49:42.016  INFO 11916 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2019-03-27 09:49:42.191  INFO 11916 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2019-03-27 09:49:42.200  INFO 11916 --- [main] com.zzh.ParserDemoApplication            : Started ParserDemoApplication in 5.981 seconds (JVM running for 20.188)
+2019-03-27 09:50:00.223  INFO 11916 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-03-27 09:50:00.224  INFO 11916 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-03-27 09:50:00.234  INFO 11916 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 10 ms
+2019-03-27 09:50:05.386  INFO 11916 --- [Forwarding newSession on session null to remote] o.o.selenium.remote.ProtocolHandshake    : Detected dialect: OSS
+2019-03-27 09:50:11.248  INFO 11916 --- [http-nio-8080-exec-2] c.zzh.controller.ParseXjtudlcController  : 读取Tesseract的文字库位置：D:\Software\Programmer\Tools\Google Chrome/tessdata
+2019-03-27 09:50:16.264  INFO 11916 --- [http-nio-8080-exec-2] c.zzh.controller.ParseXjtudlcController  : ========================验证码不正确，导致重新登陆0次========================
+2019-03-27 09:50:18.264  INFO 11916 --- [http-nio-8080-exec-2] c.zzh.controller.ParseXjtudlcController  : ========================登陆成功========================
+2019-03-27 09:50:18.349  INFO 11916 --- [http-nio-8080-exec-2] c.zzh.controller.ParseXjtudlcController  : ========================获取课程列表========================
+2019-03-27 09:50:20.508  INFO 11916 --- [http-nio-8080-exec-2] c.zzh.controller.ParseXjtudlcController  : ========================获取课件列表========================
+2019-03-27 09:50:24.766  INFO 11916 --- [http-nio-8080-exec-2] c.zzh.controller.ParseXjtudlcController  : ========================获取视频列表========================
+2019-03-27 09:50:24.797  INFO 11916 --- [http-nio-8080-exec-2] c.zzh.controller.ParseXjtudlcController  : ========================打开视频========================
+2019-03-27 09:50:24.797  INFO 11916 --- [http-nio-8080-exec-2] c.zzh.controller.ParseXjtudlcController  : ========================看到了第5门课的第1个课件的第1页的第1个视频========================
+2019-03-27 09:50:59.983  INFO 11916 --- [http-nio-8080-exec-1] c.zzh.controller.ParseXjtudlcController  : ========================手动停止========================
+2019-03-27 09:51:08.436  INFO 11916 --- [Forwarding newSession on session null to remote] o.o.selenium.remote.ProtocolHandshake    : Detected dialect: OSS
+2019-03-27 09:51:14.318  INFO 11916 --- [http-nio-8080-exec-3] c.zzh.controller.ParseXjtudlcController  : 读取Tesseract的文字库位置：D:\Software\Programmer\Tools\Google Chrome/tessdata
+2019-03-27 09:51:18.624  INFO 11916 --- [http-nio-8080-exec-3] c.zzh.controller.ParseXjtudlcController  : ========================验证码不正确，导致重新登陆0次========================
+2019-03-27 09:51:20.626  INFO 11916 --- [http-nio-8080-exec-3] c.zzh.controller.ParseXjtudlcController  : ========================登陆成功========================
+2019-03-27 09:51:20.669  INFO 11916 --- [http-nio-8080-exec-3] c.zzh.controller.ParseXjtudlcController  : ========================获取课程列表========================
+2019-03-27 09:51:22.888  INFO 11916 --- [http-nio-8080-exec-3] c.zzh.controller.ParseXjtudlcController  : ========================获取课件列表========================
+2019-03-27 09:51:27.165  INFO 11916 --- [http-nio-8080-exec-3] c.zzh.controller.ParseXjtudlcController  : ========================获取视频列表========================
+2019-03-27 09:51:27.196  INFO 11916 --- [http-nio-8080-exec-3] c.zzh.controller.ParseXjtudlcController  : ========================打开视频========================
+2019-03-27 09:51:27.196  INFO 11916 --- [http-nio-8080-exec-3] c.zzh.controller.ParseXjtudlcController  : ========================看到了第5门课的第1个课件的第1页的第1个视频========================

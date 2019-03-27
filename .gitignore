@@ -4,3 +4,4 @@
 classes/
 target/
 *.zip
+parser-demo/log/parser.log

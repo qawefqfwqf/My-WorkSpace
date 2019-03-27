@@ -164,7 +164,7 @@ public class ParseXjtudlcController {
 											// 打开视频
 											btn_coursesware_li.click();
 
-											Thread.sleep(2000);
+											Thread.sleep(4000);
 
 											// 获取目前所有标签
 											tabs = new ArrayList<String>(driver.getWindowHandles());
@@ -173,12 +173,10 @@ public class ParseXjtudlcController {
 											driver = driver.switchTo().window(tabs.get(3));
 
 											// 获取播放按钮
-											driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 											WebElement btn_play = driver
 													.findElement(By.xpath("//*[@id=\"ck_player\"]"));
 
 											// 点击播放按钮
-											driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 											btn_play.click();
 
 											// 每个视频播放时长

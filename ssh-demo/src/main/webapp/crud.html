@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<!-- jQuery要放到最前面，因为easyUI是基于jQuery的 -->
+<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"
+	charset="UTF-8"></script>
+<script type="text/javascript"
+	src="jquery-easyui-1.7.0/jquery.easyui.min.js" charset="UTF-8"></script>
+<link rel="stylesheet"
+	href="jquery-easyui-1.7.0/themes/default/easyui.css">
+<link rel="stylesheet" href="jquery-easyui-1.7.0/themes/icon.css">
+<script type="text/javascript"
+	src="jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js" charset="UTF-8"></script>
+</head>
+<body>
+	<table id="dg" title="My Users" class="easyui-datagrid"
+		style="width: 550px; height: 250px" url="crud/list" toolbar="#toolbar"
+		rownumbers="true" fitColumns="true" singleSelect="true">
+		<thead>
+			<tr>
+				<th field="id" width="50">id</th>
+				<th field="username" width="50">用户名</th>
+				<th field="password" width="50">密码</th>
+			</tr>
+		</thead>
+	</table>
+	<div id="toolbar">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"
+			onclick="add()">添加</a> <a href="#" class="easyui-linkbutton"
+			iconCls="icon-edit" plain="true" onclick="update()">修改</a> <a
+			href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true"
+			onclick="del()">删除</a>
+	</div>
+</body>
+<script type="text/javascript">
+	var url;
+	function add() {
+		//打开一个对话框
+		$('#dlg').dialog('open').dialog('setTitle', 'save');
+		$('#fm').form('clear');
+		url = 'http://localhost:8080/ssh-demo/crud/add';
+	}
+
+	function update() {
+		var row = $('#dg').datagrid('getSelected');
+		if (row) {
+			$('#dlg').dialog('open').dialog('setTitle', 'Edit User');
+			$('#fm').form('load', row);
+			url = 'getOneById?id=' + row.id;
+		} else {
+			alert("请选择一个用户操作")
+		}
+	}
+	function save() {
+		console.log(url)
+		$('#fm').form('submit', {
+			url : url,
+			onSubmit : function() {
+				return $(this).form('validate');
+			},
+			success : function(result) {
+				//var result = eval('('+result+')');
+				//console.log(result)
+				if (result == "success") {
+					$('#dlg').dialog('close'); // close the dialog
+					$('#dg').datagrid('reload'); // reload the user data
+				} else {
+					$.messager.show({
+						title : 'Error',
+						msg : "操作失败"
+					});
+				}
+			}
+		});
+	}
+	function del() {
+		var row = $('#dg').datagrid('getSelected');
+		if (row) {
+			$.messager.confirm('删除确认', '确定要删除这个用户吗?', function(r) {
+				if (r) {
+					console.log("删除中...");
+					$.post('delete.do', {
+						id : row.id
+					}, function(result) {
+						console.log(result + "ssss")
+						if (result) {
+							$('#dg').datagrid('reload'); // reload the user data
+						} else {
+							$.messager.show({ // show error message
+								title : 'Error',
+								msg : "删除失败"
+							});
+						}
+					}, 'json');
+				}
+			});
+		} else {
+			alert("请选择一个用户来操作")
+		}
+	}
+</script>
+</html>

@@ -172,12 +172,17 @@ public class ParseXjtudlcController {
 											// 切换到视频所在标签
 											driver = driver.switchTo().window(tabs.get(3));
 
-											// 获取播放按钮
-											WebElement btn_play = driver
-													.findElement(By.xpath("//*[@id=\"ck_player\"]"));
+											try {
+												// 获取播放按钮
+												driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+												WebElement btn_play = driver
+														.findElement(By.xpath("//*[@id=\"ck_player\"]"));
 
-											// 点击播放按钮
-											btn_play.click();
+												// 点击播放按钮
+												btn_play.click();
+											} catch (Exception e) {
+												logger.info("视频播放按钮未在规定时间获取到，此视频无法自动播放，可以手动执行播放");
+											}
 
 											// 每个视频播放时长
 											Thread.sleep(1000 * 60 * 6);

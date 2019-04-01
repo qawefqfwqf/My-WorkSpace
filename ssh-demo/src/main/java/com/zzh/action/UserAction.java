@@ -45,4 +45,10 @@ public class UserAction extends ActionSupport {
 		service.delete();
 		return SUCCESS;
 	}
+	
+	@Action(value = "/update", results = { @Result(type = "redirectAction", location = "list") })
+	public String update() {
+		service.update();
+		return SUCCESS;
+	}
 }

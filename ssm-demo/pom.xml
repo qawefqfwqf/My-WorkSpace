@@ -9,7 +9,7 @@
 	<!-- 依赖版本号 -->
 	<properties>
 		<!-- spring相关 -->
-		<spring.version>5.1.4.RELEASE</spring.version>
+		<spring.version>5.2.3.RELEASE</spring.version>
 	</properties>
 
 	<!-- 依赖目标 -->
